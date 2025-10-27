@@ -24,15 +24,32 @@ Example using curl from repo root:
   - `unzip -j csv_hus.zip 'psam_hus*.csv' -d snap_benefits/`
   - `unzip -j csv_pus.zip 'psam_pus*.csv' -d snap_benefits/`
 
+- Windows (PowerShell)
+  - `Invoke-WebRequest -Uri https://www2.census.gov/programs-surveys/acs/data/pums/2023/1-Year/csv_hus.zip -OutFile csv_hus.zip`
+  - `Invoke-WebRequest -Uri https://www2.census.gov/programs-surveys/acs/data/pums/2023/1-Year/csv_pus.zip -OutFile csv_pus.zip`
+  - `Expand-Archive -Path .\csv_hus.zip -DestinationPath .\snap_benefits -Force`
+  - `Expand-Archive -Path .\csv_pus.zip -DestinationPath .\snap_benefits -Force`
+  - You should see four CSVs in `snap_benefits\`: `psam_husa.csv`, `psam_husb.csv`, `psam_pusa.csv`, `psam_pusb.csv`.
+
 Run the script
 - From repo root, either cd into the folder or call the script with paths:
   1) Change into the work dir
      - `cd snap_benefits`
   2) Run with auto‑labels (downloads the 2023 PUMS data dictionary to label ancestries):
      - Top‑30 plot and CSV
-       - `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 50000 --topn 30 --anc-labels auto --outdir out`
+       - macOS/Linux: `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 50000 --topn 30 --anc-labels auto --outdir out`
+       - Windows (PowerShell/CMD): `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 50000 --topn 30 --anc-labels auto --outdir out`
      - All groups plot and CSV (no filtering)
-       - `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 0 --topn 0 --anc-labels auto --outdir out`
+       - macOS/Linux: `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 0 --topn 0 --anc-labels auto --outdir out`
+       - Windows (PowerShell/CMD): `python script.py --household psam_husa.csv psam_husb.csv --person psam_pusa.csv psam_pusb.csv --min-people 0 --topn 0 --anc-labels auto --outdir out`
+
+Installing Python packages
+- macOS/Linux: `python -m pip install -U pip pandas numpy matplotlib`
+- Windows: `py -m pip install -U pip pandas numpy matplotlib` (or `python -m pip ...`)
+
+Windows tips
+- If you see a “path too long” error, enable long paths in Windows or work in a short path like `C:\work\snap`.
+- If `python` isn’t found, try `py` (e.g., `py script.py ...`).
 
 Outputs
 - CSV: `out/snap_per_capita_ancestry.csv` (columns: ancestry_code, ancestry_label, people, people_in_snap_hh, rate)
