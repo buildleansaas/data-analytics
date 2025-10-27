@@ -1,0 +1,6 @@
+*/__pycache__/
+.DS_Store
+
+# Ignore large ACS PUMS CSVs
+psam_*.csv
+**/psam_*.csv
